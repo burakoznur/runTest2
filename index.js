@@ -1,6 +1,8 @@
 const port = process.env.PORT || 3500;
-const fs = require('fs')
-const fastify = require('fastify')({
+import fs from 'fs';
+import Fastify from 'fastify';
+
+const fastify = Fastify({
   http2: true,
   https: {
     key: fs.readFileSync('./localhost-privkey.pem'),
