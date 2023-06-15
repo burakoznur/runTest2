@@ -1,24 +1,23 @@
-import express from 'express';
+const port = process.env.PORT || 3500;
+const fs = require('fs')
+const fastify = require('fastify')({
+  http2: true,
+  https: {
+    key: fs.readFileSync('./localhost-privkey.pem'),
+    cert: fs.readFileSync('./localhost-cert.pem')
+  }
+})
 
-const app = express();
-
-app.get('/', async (req, res) => {
-  const french = new Intl.DateTimeFormat('fr', { weekday: 'long' });
-
-  // see https://www.weather.gov/documentation/services-web-api
-  const response = await fetch('https://api.weather.gov/gridpoints/MTR/85,105/forecast');
-  const weatherData = await response.json();
-
-  res.send(
-    `
-    Congrats, you're running  Node.js ${process.version}.<br><br>
-    Thanks to <code>Intl</code>, it's easy to format dates: "Aujourd'hui nous sommes ${french.format(new Date())}".<br>
-    Thanks to <code>fetch()</code>, we can get the weather forecast for San Francisco: ${weatherData?.properties?.periods[0]?.detailedForecast}<br>
-    `
-  );
+fastify.get('/', function (request, reply) {
+  reply.code(200).send({ hello: 'world' })
 });
 
-const port = process.env.PORT || 8080;
-app.listen(port, () => {
-  console.log('Node.js demo is listening on port', port);
+fastify.post('/burak', function (request, reply) {
+  console.log("burak");
+  reply.code(200).send({ hello: 'world' })
 });
+
+fastify.listen({ port: port }, function(err, address){
+  console.log("err: ", err);
+  console.log("port: ", address);
+})
