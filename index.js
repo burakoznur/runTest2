@@ -1,4 +1,4 @@
-const port = process.env.PORT || 3500;
+const port = process.env.PORT || 3501;
 import fs from 'fs';
 import Fastify from 'fastify';
 
