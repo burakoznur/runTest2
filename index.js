@@ -1,21 +1,12 @@
-const port = process.env.PORT || 3501;
-import fs from 'fs';
+const port = process.env.PORT || 3000;
 import Fastify from 'fastify';
 
 const fastify = Fastify({
   http2: true,
-  https: {
-    key: fs.readFileSync('./localhost-privkey.pem'),
-    cert: fs.readFileSync('./localhost-cert.pem')
-  }
+  logger: true,
 })
 
 fastify.get('/', function (request, reply) {
-  reply.code(200).send({ hello: 'world' })
-});
-
-fastify.post('/burak', function (request, reply) {
-  console.log("burak");
   reply.code(200).send({ hello: 'world' })
 });
 
